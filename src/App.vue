@@ -19,5 +19,12 @@
     text-align: center;
     color: #2c3e50;
     border: 1px solid lightgrey;
+    background: white;
+  }
+
+  @media screen and (max-width: 767px) {
+    #app {
+      background: red
+    }
   }
 </style>
