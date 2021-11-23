@@ -15,7 +15,7 @@ export const getCurrentAnonymousUser = () => {
 }
 
 export const getAccessToken = () => {
-    return store.userAccessToken
+    return store.currentAnonymousUser.access_token
 }
 
 export const getContainerKey =() => {

@@ -40,6 +40,7 @@
   const props = defineProps<{
     message: communityMessage
   }>()
+  
   const emit = defineEmits(['showSetUserModal'])
   const { locale } = useI18n({ useScope: 'global' })
 

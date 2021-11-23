@@ -1,21 +1,24 @@
 <template>
   <div>
-    <div class="main-container">
+    <div class="main-container" :key="containerKey">
       <loading v-model:active="isLoading" :can-cancel="true" :is-full-page="false"> </loading>
       <div class="header">
         <div class="community-user-info">{{ $t('community_users') }}: {{ communityUsersNumber }}</div>
         <div v-if="userNickname" class="user-container">
           <div class="logout button" role="button" @click="handleLogoutUser"><i class="material-icons md-18 icon-align">logout</i></div>
           <p class="username">{{ userNickname }}</p>
-          <country-flag :country="userCountry" />
+          <country-flag :country="userCountry" :shadow="true" />
         </div>
         <div class="button-container">
           <div class="refresh button" role="button" @click="handleRefreshBBS"><i class="material-icons md-18 icon-align">refresh</i></div>
           <div class="language button" role="button" @click="showLangSelect = true"><i class="material-icons icon-align">language</i>{{ localeLabel }}</div>
         </div>
       </div>
-      <div class="post-container" :key="containerKey">
-        <SinglePost v-for="(message, index) in messages" :key="index" :message="message" :id="`id ${index}`" class="single_post" @showSetUserModal="showSetUserModal = true" />
+      <div class="post-container">
+        <!-- This interior div is for the sole purpose of attaching a class and id to each SinglePost (for scrollToBottom) without making Vue mad -->
+        <div v-for="(message, index) in messages" class="single_post" :id="`id ${index}`">
+          <SinglePost :key="index" :message="message" @showSetUserModal="showSetUserModal = true" />
+        </div>
       </div>
       <PostInput
         v-if="!postsDisabled"
@@ -89,11 +92,14 @@
     if (communityProfile.post_disabled_flg) postsDisabled.value = true
     if (communityProfile.bbs_type === 'bbs_one_way') postsDisabled.value = true
     await setMessages(communityIdNumber.value, locale.value as string)
-
     isLoading.value = false
   })
 
   onUpdated(() => {
+    if (checkForLocalUser()) {
+      userNickname.value = getCurrentAnonymousUser().nickname
+      userCountry.value = getCurrentAnonymousUser().country_cd
+    }
     scrollToBottom()
   })
 
@@ -124,7 +130,7 @@
   const handleLogoutUser = () => {
     isLoading.value = true
     localStorage.removeItem('user')
-    setCurrentAnonymousUser({nickname: '', country_cd: '', lang_cd: ''})
+    setCurrentAnonymousUser({ nickname: '', country_cd: '', lang_cd: '', access_token: '' })
     userNickname.value = ''
     userCountry.value = ''
     isLoading.value = false
@@ -218,7 +224,8 @@
     text-align: center;
     font-size: 0.7em;
   }
-  .refresh, .logout  {
+  .refresh,
+  .logout {
     border-radius: 100%;
     margin-right: 1em;
   }

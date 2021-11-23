@@ -9,8 +9,9 @@
         <!-- HAVE TO GET THE SELECT TO HAVE A DEFAULT VALUE -->
         <label for="country" class="label">{{ $t('country') }}</label>
         <v-select :options="countriesObj" label="country_name" class="country_select" v-model="selectedCountry">
+          <!-- TYPESCRIPT UNKNOWN HERE IS PRETTY JANKY -->
           <template v-slot:option="country: unknown">
-            <span><country-flag :country="(country as supportedCountryData).alpha_2" shadow="true" /></span>
+            <span v-if="country"><country-flag :country="(country as supportedCountryData).alpha_2" :shadow="true" /></span>
             {{ (country as supportedCountryData).country_name }}
           </template>
         </v-select>
@@ -23,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, Ref, defineEmits, VNode } from 'vue'
+  import { ref, Ref, defineEmits } from 'vue'
   import vSelect from 'vue-select'
   import 'vue-select/dist/vue-select.css'
   import CountryFlag from 'vue-country-flag-next'

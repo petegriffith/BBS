@@ -10,7 +10,7 @@ const currentCommunityProfile: communityProfile = {
     post_disabled_flg: false,
     success: false,
     total_count: 0,
-    bbs_type: "bbs"
+    bbs_type: 'bbs'
 }
 
 const currentCommunityMessages: Ref<communityMessage[]> = ref([])
@@ -19,11 +19,10 @@ const currentAnonymousUser: anonymousUserProfile = {
     nickname: '',
     country_cd: '',
     lang_cd: 'en',
+    access_token: 'string'
 }
 
 const containerKey = ref(0)
-
-const userAccessToken: string = ''
 
 const isReply = ref(false)
 
@@ -36,7 +35,6 @@ const replyInfo = ref({
 const store = {
     currentCommunityProfile: currentCommunityProfile,
     currentAnonymousUser: currentAnonymousUser,
-    userAccessToken: userAccessToken,
     containerKey: containerKey,
     currentCommunityMessages: currentCommunityMessages,
     isReply: isReply,

@@ -9,12 +9,16 @@ export const extractPhotoFile = (event: Event): File | undefined => {
 }
 
 export const downloadImage = async (imageURL: string): Promise<void> => {
-  const response = await axios.get(imageURL, { responseType: 'blob' })
-  const filetype = response.headers['content-type'].substring(6)
-  const blob = new Blob([response.data], { type: 'application/pdf' })
-  const link = document.createElement('a')
-  link.href = URL.createObjectURL(blob)
-  link.download = `download.${filetype}`
-  link.click()
-  URL.revokeObjectURL(link.href)
+  try {
+    const response = await axios.get(imageURL, { responseType: 'blob' })
+    const filetype = response.headers['content-type'].substring(6)
+    const blob = new Blob([response.data], { type: 'application/pdf' })
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = `download.${filetype}`
+    link.click()
+    URL.revokeObjectURL(link.href)
+  } catch (err) {
+    alert(err)
+  }
 }

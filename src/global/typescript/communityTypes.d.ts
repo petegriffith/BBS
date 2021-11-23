@@ -45,7 +45,8 @@ interface messageReplyObj {
 interface anonymousUserProfile {
     nickname: string,
     country_cd: supportedCountryAlpha,
-    lang_cd: string
+    lang_cd: string,
+    access_token: string
 }
 
 interface imageObject {

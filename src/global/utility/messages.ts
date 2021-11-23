@@ -4,14 +4,17 @@ import { community } from '../API/apicalls'
 import supportedLanguages from '../supported_languages.json'
 
 export const setMessages = async (communityId: number, lang: string) => {
-  const fetchedMessages: communityMessageContainer = await community.getMessagesById(communityId, lang)
-  // Need to add error handling here, and/or just add the whole function to the above setStores
-  if (fetchedMessages.success === true) {
-    // This filters out messages with the isHidden tag
-    const filteredMessages = fetchedMessages.messages.filter((message) => !message.is_hidden)
-    setCurrentCommunityMessages(filteredMessages)
+  try {
+    const fetchedMessages: communityMessageContainer = await community.getMessagesById(communityId, lang)
+    if (fetchedMessages.success === true) {
+      // This filters out messages with the isHidden tag
+      const filteredMessages = fetchedMessages.messages.filter((message) => !message.is_hidden)
+      setCurrentCommunityMessages(filteredMessages)
+    }
+    incrementContainerKey()
+  } catch (err) {
+    alert(err)
   }
-  incrementContainerKey()
 }
 
 export const resetMessageLanguage = async (passedLang: supportedLanguage): Promise<string> => {

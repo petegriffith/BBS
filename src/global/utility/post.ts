@@ -1,4 +1,4 @@
-import { getAccessToken, getCurrentCommunityId, getIsReplyBool, getReplyInfo } from '../store/getters'
+import { getAccessToken, getCurrentAnonymousUser, getCurrentCommunityId, getIsReplyBool, getReplyInfo } from '../store/getters'
 import { toggleIsReply } from '../store/setters'
 import { post } from '../API/apicalls'
 import { setMessages } from './messages'
@@ -9,9 +9,12 @@ export const postMessageAndResetMessages = async (inputMessage: string, locale: 
     message: inputMessage,
     community_id: getCurrentCommunityId(),
   }
-  const accessToken = getAccessToken()
   // message not showing special characters properly (Pete's comment => Pete&#x27;s comment)
-  await post.postMessageToBBS(postBody, accessToken)
+  try {
+    await post.postMessageToBBS(postBody, getAccessToken())
+  } catch (err) {
+    alert(err)
+  }
   await setMessages(getCurrentCommunityId(), locale)
 }
 
@@ -21,9 +24,12 @@ export const postReplyAndResetMessages = async (inputMessage: string, locale: st
     message_id: getReplyInfo().value.messageIdToReplyTo,
     community_id: getCurrentCommunityId(),
   }
-  const accessToken = getAccessToken()
   // message not showing special characters properly (Pete's comment => Pete&#x27;s comment)
-  await post.replyToBBSMessage(replyBody, accessToken)
+  try {
+    await post.replyToBBSMessage(replyBody, getAccessToken())
+  } catch (err) {
+    alert(err)
+  }
   toggleIsReply()
   await setMessages(getCurrentCommunityId(), locale)
 }
@@ -38,15 +44,23 @@ export const postImageandResetMessages = async (imageFile: File, locale: string)
       message: cloudinaryResponse.secure_url,
     }
     // call ktzn api
-    await post.postImageToBBS(imagePostObject, getAccessToken())
+    try {
+      await post.postImageToBBS(imagePostObject, getAccessToken())
+    } catch (err) {
+      alert(err)
+    }
   } else {
     const imageReplyObject: ajaxReplyObject = {
       community_id: getCurrentCommunityId(),
       message: cloudinaryResponse.secure_url,
-      message_id: getReplyInfo().value.messageIdToReplyTo
+      message_id: getReplyInfo().value.messageIdToReplyTo,
     }
     // call ktzn api
-    await post.replyWithImageToBBSMessage(imageReplyObject, getAccessToken())
+    try {
+      await post.replyWithImageToBBSMessage(imageReplyObject, getAccessToken())
+    } catch (err) {
+      alert(err)
+    }
     toggleIsReply()
   }
   await setMessages(getCurrentCommunityId(), locale)
