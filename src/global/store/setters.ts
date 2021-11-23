@@ -12,7 +12,7 @@ export const setCurrentAnonymousUser = (user: anonymousUserProfile) => {
 }
 
 export const setAccessToken = (token: string) => {
-    store.userAccessToken = token
+    store.currentAnonymousUser.access_token = token
 }
 
 export const incrementContainerKey = () => {

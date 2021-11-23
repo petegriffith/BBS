@@ -1,4 +1,4 @@
-import { setCurrentAnonymousUser, setAccessToken, incrementContainerKey } from '../store/setters'
+import { setCurrentAnonymousUser, incrementContainerKey } from '../store/setters'
 import { getCurrentCommunityProfile, getCurrentAnonymousUser } from '../store/getters'
 import { user } from '../API/apicalls'
 
@@ -18,7 +18,6 @@ export const addNewUserToCommunity = async (data: emmited_profile_data, locale: 
     alert (err)
     return
   }
-  setAccessToken(accessToken)
   localStorage.setItem('user', JSON.stringify(newUser))
   incrementContainerKey()
 }
