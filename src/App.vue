@@ -22,7 +22,7 @@
     background: white;
   }
 
-  @media only screen and (max-device-width: 767px) {
+  @media only screen and (max-width: 767px) {
     #app {
       background: red
     }
