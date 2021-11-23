@@ -9,9 +9,9 @@
         <!-- HAVE TO GET THE SELECT TO HAVE A DEFAULT VALUE -->
         <label for="country" class="label">{{ $t('country') }}</label>
         <v-select :options="countriesObj" label="country_name" class="country_select" v-model="selectedCountry">
-          <template v-slot:option="country">
-            <span><country-flag :country="country.alpha_2" shadow="true" /></span>
-            {{ country.country_name }}
+          <template v-slot:option="country: unknown">
+            <span><country-flag :country="(country as supportedCountryData).alpha_2" shadow="true" /></span>
+            {{ (country as supportedCountryData).country_name }}
           </template>
         </v-select>
         <div v-if="nickname.length > 0" class="ok-button button" role="button" @click="emitSetProfile">OK</div>

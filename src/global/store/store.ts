@@ -9,7 +9,8 @@ const currentCommunityProfile: communityProfile = {
     name: '',
     post_disabled_flg: false,
     success: false,
-    total_count: 0
+    total_count: 0,
+    bbs_type: "bbs"
 }
 
 const currentCommunityMessages: Ref<communityMessage[]> = ref([])
