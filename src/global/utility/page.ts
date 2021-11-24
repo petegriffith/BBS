@@ -1,6 +1,7 @@
 export const checkURL = () => {
   let communityId: number, langFromURL: string | undefined
   const siteURLString = window.location.pathname
+  console.log("URL:", siteURLString)
   // this first if check and it's else block are for dev only and need to be deleted once the app is hosted
   if (siteURLString.length > 1) {
     const codedURL = new URL(siteURLString)
