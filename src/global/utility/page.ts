@@ -1,10 +1,8 @@
 export const checkURL = () => {
   let communityId: number, langFromURL: string | undefined
-  const siteURLString = document.location.pathname
+  const siteURLString = document.location.href
+  // I think this should work for getting the URL from the iframe. We need to check for sure.
   console.log("URL:", siteURLString)
-  console.log("2:", document.location)
-  console.log("3", document)
-  console.log("4", window)
   // this first if check and it's else block are for dev only and need to be deleted once the app is hosted
   if (siteURLString.length > 1) {
     const codedURL = new URL(siteURLString)
