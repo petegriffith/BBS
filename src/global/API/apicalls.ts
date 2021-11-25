@@ -2,7 +2,7 @@
 // NEED TO SORT OUT A BETTER SOLUTION FOR THE ABOVE
 
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import 'dotenv'
+/* import 'dotenv' */
 
 const instance = axios.create({
   timeout: 10000,
