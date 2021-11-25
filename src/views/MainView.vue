@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div class="main-container" :key="containerKey">
+    <div class="main-container">
       <loading v-model:active="isLoading" :can-cancel="true" :is-full-page="false"> </loading>
       <div class="header">
         <div class="community-user-info">{{ $t('community_users') }}: {{ communityUsersNumber }}</div>
         <div v-if="userNickname" class="user-container">
-          <div class="logout button" role="button" @click="handleLogoutUser"><i class="material-icons md-18 icon-align">logout</i></div>
           <p class="username">{{ userNickname }}</p>
-          <country-flag :country="userCountry" :shadow="true" />
+          <country-flag class="flag" :country="userCountry" :shadow="true" />
         </div>
         <div class="button-container">
+          <div v-if="userNickname" class="logout button" role="button" @click="handleLogoutUser"><i class="material-icons md-18 icon-align">logout</i></div>
           <div class="refresh button" role="button" @click="handleRefreshBBS"><i class="material-icons md-18 icon-align">refresh</i></div>
-          <div v-if="isDisabled = false" class="language button" role="button" @click="showLangSelect = true"><i class="material-icons icon-align">language</i>{{ localeLabel }}</div>
+          <div v-if="!languageSelectIsDisabled" class="language button" role="button" @click="showLangSelect = true"><i class="material-icons icon-align">language</i>{{ localeLabel }}</div>
         </div>
       </div>
-      <div class="post-container">
-        <!-- This interior div is for the sole purpose of attaching a class and id to each SinglePost (for scrollToBottom) without making Vue mad -->
+      <div class="post-container" :key="containerKey">
+        <!-- These interior divs are for the sole purpose of attaching a class and id to each SinglePost (for scrollToBottom) without making Vue mad -->
         <div v-for="(message, index) in messages" class="single_post" :id="`id ${index}`">
           <SinglePost :key="index" :message="message" @showSetUserModal="showSetUserModal = true" />
         </div>
@@ -77,7 +77,7 @@
   const userNickname = ref('')
   const userCountry = ref('')
 
-  const isDisabled = true
+  const languageSelectIsDisabled = true
 
   onBeforeMount(async () => {
     // this function is a huge mess. I'll clean it up.
@@ -242,10 +242,15 @@
 
   .post-container {
     overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   .dev_button {
     color: orange;
     margin-top: 1em;
+  }
+
+  .flag {
+    margin-bottom: .2em;
   }
 </style>
