@@ -11,7 +11,7 @@
         </div>
         <div class="button-container">
           <div class="refresh button" role="button" @click="handleRefreshBBS"><i class="material-icons md-18 icon-align">refresh</i></div>
-          <div class="language button" role="button" @click="showLangSelect = true"><i class="material-icons icon-align">language</i>{{ localeLabel }}</div>
+          <div v-if="isDisabled = false" class="language button" role="button" @click="showLangSelect = true"><i class="material-icons icon-align">language</i>{{ localeLabel }}</div>
         </div>
       </div>
       <div class="post-container">
@@ -76,6 +76,8 @@
 
   const userNickname = ref('')
   const userCountry = ref('')
+
+  const isDisabled = true
 
   onBeforeMount(async () => {
     // this function is a huge mess. I'll clean it up.

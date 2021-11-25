@@ -11,7 +11,7 @@
         <v-select :options="countriesObj" label="country_name" class="country_select" v-model="selectedCountry">
           <!-- TYPESCRIPT UNKNOWN HERE IS PRETTY JANKY -->
           <template v-slot:option="country: unknown">
-            <span v-if="country"><country-flag :country="(country as supportedCountryData).alpha_2" :shadow="true" /></span>
+            <span v-if="country"><country-flag :country="(country as supportedCountryData).alpha_2" :shadow="true" /> </span>
             {{ (country as supportedCountryData).country_name }}
           </template>
         </v-select>

@@ -9,6 +9,7 @@ export const postMessageAndResetMessages = async (inputMessage: string, locale: 
     message: inputMessage,
     community_id: getCurrentCommunityId(),
   }
+  console.log(postBody)
   // message not showing special characters properly (Pete's comment => Pete&#x27;s comment)
   try {
     await post.postMessageToBBS(postBody, getAccessToken())
