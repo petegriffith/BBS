@@ -23,6 +23,8 @@ export const community = {
   getMessagesById: (communityId: number, lang: string): Promise<communityMessageContainer> => requests.get(` ${import.meta.env.VITE_API_URL}get/${communityId}?lang_cd=${lang}&page=0`),
 }
 
+console.log(community.getMessagesById)
+
 export const user = {
   getAnonymousUserToken: (userProfile: anonymousUserProfile): Promise<userTokenObject> => requests.post(` ${import.meta.env.VITE_API_URL}user/anonymous/create`, userProfile),
   userJoinCommunity: (communityId: number, accessToken: string): Promise<unknown> => requests.post(` ${import.meta.env.VITE_API_URL}user/join/${communityId}`, {}, accessToken),
