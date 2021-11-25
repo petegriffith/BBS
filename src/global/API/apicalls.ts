@@ -8,6 +8,8 @@ const instance = axios.create({
   timeout: 10000,
 })
 
+console.log("env var:", import.meta.env.VITE_API_URL)
+
 const responseBody = (response: AxiosResponse<any>) => response.data
 
 const requests = {
