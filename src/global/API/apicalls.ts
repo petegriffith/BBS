@@ -3,12 +3,11 @@
 
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-
 const instance = axios.create({
   timeout: 10000,
 })
 
-console.log('env var:', import.meta.env.VITE_API_URL)
+console.log("URL?", import.meta.env.API_URL)
 
 const responseBody = (response: AxiosResponse<any>) => response.data
 
@@ -22,8 +21,6 @@ export const community = {
   getProfileById: (communityId: number, lang: string): Promise<communityProfile> => requests.get(`${import.meta.env.VITE_API_URL}get/profile/${communityId}?lang_cd=${lang}`),
   getMessagesById: (communityId: number, lang: string): Promise<communityMessageContainer> => requests.get(`${import.meta.env.VITE_API_URL}get/${communityId}?lang_cd=${lang}&page=0`),
 }
-
-console.log(community.getMessagesById)
 
 export const user = {
   getAnonymousUserToken: (userProfile: anonymousUserProfile): Promise<userTokenObject> => requests.post(`${import.meta.env.VITE_API_URL}user/anonymous/create`, userProfile),
