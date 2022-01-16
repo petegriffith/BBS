@@ -1,4 +1,4 @@
-# Kotozna BBS
+# BBS
 > A pooled BBS-style comment board built for mounting in iFrames
 
 
