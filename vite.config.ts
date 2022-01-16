@@ -9,8 +9,6 @@ export default defineConfig({
     vue(),
     vueI18n({
       include: path.resolve(__dirname, './src/i18n/locales/**'),
-    })
-  ]
+    }),
+  ],
 })
-
-

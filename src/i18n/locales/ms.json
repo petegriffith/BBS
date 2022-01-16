@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "Pengguna Komuniti: {count}",
+  "reply": "Balas",
+  "untranslatedMsg": "Lihat mesej asal",
+  "languages": "Bahasa",
+  "inputPlaceholder": "Masukkan mesej di sini",
+  "selectNicknameAndCountry": "Sila masukkan nama panggilan dan negara anda",
+  "nickname": "nama samaran",
+  "country": "Negara",
+  "cancel": "Batal",
+  "uploadPhoto": "Muat naik imej",
+  "photoConstraintsHeader": "Fail yang Disokong:",
+  "photoSizeConstraints": "10mb maks",
+  "replyBox": "Membalas kepada {nickname}",
+  "countrySelectPlaceholder": "Pilih negara anda",
+  "newMessages": "{count} mesej baharu | {count} mesej baharu",
+  "inputMessageTooLong": "Mesej tidak boleh melebihi 300 aksara",
+  "nicknameTooLong": "Nama panggilan tidak boleh melebihi 50 aksara"
+}

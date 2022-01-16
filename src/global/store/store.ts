@@ -13,13 +13,18 @@ const currentCommunityProfile: communityProfile = {
     bbs_type: 'bbs'
 }
 
+const currentLocale: string = 'en'
+
 const currentCommunityMessages: Ref<communityMessage[]> = ref([])
 
-const currentAnonymousUser: anonymousUserProfile = {
+const currentAnonymousUser: localAnonymousUserProfile = {
     nickname: '',
     country_cd: '',
     lang_cd: 'en',
-    access_token: 'string'
+    access_token: '',
+    refresh_token: '',
+    community_id: 0,
+    last_refreshed: new Date().toString()
 }
 
 const containerKey = ref(0)
@@ -32,13 +37,21 @@ const replyInfo = ref({
     messageIdToReplyTo: '',
 })
 
+const newMessages = ref(0)
+const isError = ref(false)
+const errorCode = ref(1)
+
 const store = {
     currentCommunityProfile: currentCommunityProfile,
     currentAnonymousUser: currentAnonymousUser,
+    currentLocale: currentLocale,
     containerKey: containerKey,
     currentCommunityMessages: currentCommunityMessages,
     isReply: isReply,
     replyInfo: replyInfo,
+    newMessages: newMessages,
+    isError: isError,
+    errorCode: errorCode
 }
 
 export function AccessStore(){

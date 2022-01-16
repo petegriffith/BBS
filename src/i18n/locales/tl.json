@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "Mga Gumagamit ng Komunidad: {count}",
+  "reply": "Sumagot",
+  "untranslatedMsg": "Tingnan ang orihinal na mensahe",
+  "languages": "Mga wika",
+  "inputPlaceholder": "Mag-input ng mensahe dito",
+  "selectNicknameAndCountry": "Pakilagay ang iyong palayaw at bansa",
+  "nickname": "Palayaw",
+  "country": "Bansa",
+  "cancel": "Kanselahin",
+  "uploadPhoto": "Mag-upload ng larawan",
+  "photoConstraintsHeader": "Mga Sinusuportahang File:",
+  "photoSizeConstraints": "10mb max",
+  "replyBox": "Sumasagot sa {nickname}",
+  "countrySelectPlaceholder": "Piliin ang iyong bansa",
+  "newMessages": "{count} bagong mensahe | {count} bagong mensahe",
+  "inputMessageTooLong": "Ang mensahe ay hindi maaaring mas mahaba sa 300 character",
+  "nicknameTooLong": "Ang palayaw ay hindi maaaring mas mahaba sa 50 character"
+}

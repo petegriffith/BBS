@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "समुदाय उपयोगकर्ता: {count}",
+  "reply": "जवाब",
+  "untranslatedMsg": "मूल संदेश देखें",
+  "languages": "बोली",
+  "inputPlaceholder": "इनपुट संदेश यहाँ",
+  "selectNicknameAndCountry": "कृपया अपना उपनाम और देश दर्ज करें",
+  "nickname": "उपनाम",
+  "country": "देश",
+  "cancel": "रद्द करें",
+  "uploadPhoto": "एक छवि अपलोड करें",
+  "photoConstraintsHeader": "समर्थित फ़ाइलें:",
+  "photoSizeConstraints": "10mb अधिकतम",
+  "replyBox": "{nickname} का जवाब",
+  "countrySelectPlaceholder": "अपने देश का चयन करें",
+  "newMessages": "{count} नया संदेश | {count} नए संदेश",
+  "inputMessageTooLong": "संदेश 300 वर्णों से अधिक लंबा नहीं हो सकता",
+  "nicknameTooLong": "उपनाम 50 वर्णों से अधिक लंबा नहीं हो सकता"
+}

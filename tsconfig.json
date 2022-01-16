@@ -12,8 +12,7 @@
     "types": [
       // "./node_modules/@types",
       // "./node_modules/vue-i18n/dist",
-      "@intlify/vite-plugin-vue-i18n/client",
-      "node"
+      "@intlify/vite-plugin-vue-i18n/client"
     ],   
     "lib": ["esnext", "dom"]
   },

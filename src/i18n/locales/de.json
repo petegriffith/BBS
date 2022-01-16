@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "Verwender in der Gemeinschaft: {count}",
+  "reply": "Antwort",
+  "untranslatedMsg": "Siehe ursprüngliche Nachricht",
+  "languages": "Sprachen",
+  "inputPlaceholder": "Nachricht hier eingeben",
+  "selectNicknameAndCountry": "Bitte geben Sie Ihren Spitznamen und Ihr Land ein",
+  "nickname": "Spitzname",
+  "country": "Land",
+  "cancel": "Abbrechen",
+  "uploadPhoto": "Ein Bild hochladen",
+  "photoConstraintsHeader": "Unterstützte Dateien:",
+  "photoSizeConstraints": "Maximal 10mb",
+  "replyBox": "Antwort auf {nickname}",
+  "countrySelectPlaceholder": "Wählen Sie Ihr Land",
+  "newMessages": "{count} neue Nachricht | {count} neue Nachrichten",
+  "inputMessageTooLong": "Die Nachricht darf nicht länger als 300 Zeichen sein.",
+  "nicknameTooLong": "Der Nickname darf nicht länger als 50 Zeichen sein."
+}

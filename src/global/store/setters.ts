@@ -1,18 +1,21 @@
-import { community } from '../API/apicalls'
+import { fetchCommunityProfile } from '../utility/community'
 import { AccessStore } from './store'
 
 const store = AccessStore()
 
-export const fetchAndSetCommunityProfile = async (communityId: number, language: string = 'en') => {
-    store.currentCommunityProfile = await community.getProfileById(communityId, language)
+export const setCommunityProfile = async (communityId: number, language: string = 'en') => {
+    const profile = await fetchCommunityProfile(communityId, language)
+    if (profile) {
+        store.currentCommunityProfile = profile
+    }
 }
 
-export const setCurrentAnonymousUser = (user: anonymousUserProfile) => {
+export const setCurrentLocale = (locale: string) => {
+    store.currentLocale = locale
+}
+
+export const setCurrentAnonymousUser = (user: localAnonymousUserProfile) => {
     store.currentAnonymousUser = user
-}
-
-export const setAccessToken = (token: string) => {
-    store.currentAnonymousUser.access_token = token
 }
 
 export const incrementContainerKey = () => {
@@ -29,4 +32,20 @@ export const setReplyInfo = (replyInfo: replyInfo ) => {
 
 export const setCurrentCommunityMessages = (messages: communityMessage[]) => {
     store.currentCommunityMessages.value = messages
+}
+
+export const incrementNewMessages = (difference: number) => {
+    store.newMessages.value += difference
+}
+
+export const resetNewMessages = () => {
+    store.newMessages.value = 0
+}
+
+export const toggleIsError = () => {
+    store.isError.value = !store.isError.value
+}
+
+export const setErrorCode = (code: number) => {
+    store.errorCode.value = code
 }

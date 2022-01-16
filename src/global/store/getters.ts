@@ -10,12 +10,20 @@ export const getCurrentCommunityId = () => {
     return store.currentCommunityProfile.community_id
 }
 
+export const getCurrentLocale = () => {
+    return store.currentLocale
+}
+
 export const getCurrentAnonymousUser = () => {
     return store.currentAnonymousUser
 }
 
 export const getAccessToken = () => {
     return store.currentAnonymousUser.access_token
+}
+
+export const getRefreshToken = () => {
+    return store.currentAnonymousUser.refresh_token
 }
 
 export const getContainerKey =() => {
@@ -32,4 +40,16 @@ export const getReplyInfo =() => {
 
 export const getCurrentCommunityMessages =() => {
     return store.currentCommunityMessages
+}
+
+export const getNewMessageCount = () => {
+    return store.newMessages
+}
+
+export const getIsError = () => {
+    return store.isError
+}
+
+export const getErrorCode = () => {
+    return store.errorCode
 }

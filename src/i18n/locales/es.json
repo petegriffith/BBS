@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "Usuarios comunitarios: {count}",
+  "reply": "Respuesta",
+  "untranslatedMsg": "Ver mensaje original",
+  "languages": "Idiomas",
+  "inputPlaceholder": "Introduzca el mensaje aquí",
+  "selectNicknameAndCountry": "Por favor, introduzca su nombre y país",
+  "nickname": "Apodo",
+  "country": "País",
+  "cancel": "Cancelar",
+  "uploadPhoto": "Subir una imagen",
+  "photoConstraintsHeader": "Archivos compatibles:",
+  "photoSizeConstraints": "10mb máximo",
+  "replyBox": "Respondiendo a {nickname}",
+  "countrySelectPlaceholder": "Seleccione su país",
+  "newMessages": "{count} mensaje nuevo | {count} mensajes nuevos",
+  "inputMessageTooLong": "El mensaje no puede tener más de 300 caracteres",
+  "nicknameTooLong": "El apodo no puede tener más de 50 caracteres"
+}

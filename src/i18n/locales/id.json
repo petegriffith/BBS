@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "Pengguna Komunitas: {count}",
+  "reply": "Membalas",
+  "untranslatedMsg": "Lihat pesan asli",
+  "languages": "Bahasa",
+  "inputPlaceholder": "Masukkan pesan di sini",
+  "selectNicknameAndCountry": "Silakan masukkan nama panggilan dan negara Anda",
+  "nickname": "Nama panggilan",
+  "country": "Negara",
+  "cancel": "Membatalkan",
+  "uploadPhoto": "Unggah gambar",
+  "photoConstraintsHeader": "File yang Didukung:",
+  "photoSizeConstraints": "maksimal 10mb",
+  "replyBox": "Membalas {nickname}",
+  "countrySelectPlaceholder": "Pilih negaramu",
+  "newMessages": "{count} pesan baru | {count} pesan baru",
+  "inputMessageTooLong": "Pesan tidak boleh lebih dari 300 karakter",
+  "nicknameTooLong": "Nama panggilan tidak boleh lebih dari 50 karakter"
+}

@@ -16,24 +16,26 @@ const requests = {
 }
 
 export const community = {
-  getProfileById: (communityId: number, lang: string): Promise<communityProfile> => requests.get(`${import.meta.env.VITE_API_URL}get/profile/${communityId}?lang_cd=${lang}`),
-  getMessagesById: (communityId: number, lang: string): Promise<communityMessageContainer> => requests.get(`${import.meta.env.VITE_API_URL}get/${communityId}?lang_cd=${lang}&page=0`),
+  getProfileById: (communityId: number, lang: string): Promise<communityProfile> => requests.get(`${import.meta.env.VITE_API_URL}bbs/get/profile/${communityId}?lang_cd=${lang}`),
+  getMessagesById: (communityId: number, lang: string): Promise<communityMessageContainer> => requests.get(`${import.meta.env.VITE_API_URL}bbs/get/${communityId}?lang_cd=${lang}&page=0`),
 }
 
 export const user = {
-  getAnonymousUserToken: (userProfile: anonymousUserProfile): Promise<userTokenObject> => requests.post(`${import.meta.env.VITE_API_URL}user/anonymous/create`, userProfile),
-  userJoinCommunity: (communityId: number, accessToken: string): Promise<unknown> => requests.post(`${import.meta.env.VITE_API_URL}user/join/${communityId}`, {}, accessToken),
+  getAnonymousUserToken: (userProfile: anonymousUserProfile): Promise<apiUserTokenResponseObject> => requests.post(`${import.meta.env.VITE_API_URL}bbs/user/anonymous/create`, userProfile),
+  refreshAccessToken: (refreshToken: apiRefreshRequestObject): Promise<apiUserTokenResponseObject> => requests.post(`${import.meta.env.VITE_API_URL}bbs/user/auth/refresh`, refreshToken),
+  userJoinCommunity: (communityId: number, accessToken: string): Promise<unknown> => requests.post(`${import.meta.env.VITE_API_URL}bbs/user/join/${communityId}`, {}, accessToken),
 }
 
 export const post = {
-  postMessageToBBS: (messageBody: ajaxPostObject, accessToken: string): Promise<ajaxPostObject> => requests.post(`${import.meta.env.VITE_API_URL}post`, messageBody, accessToken),
-  postImageToBBS: (messageBody: ajaxPostObject, accessToken: string): Promise<ajaxPostObject> => requests.post(`${import.meta.env.VITE_API_URL}post/image`, messageBody, accessToken),
-  replyToBBSMessage: (replyMessageBody: ajaxReplyObject, accessToken: string): Promise<ajaxPostObject> => requests.post(`${import.meta.env.VITE_API_URL}reply`, replyMessageBody, accessToken),
-  replyWithImageToBBSMessage: (replyMessageBody: ajaxReplyObject, accessToken: string): Promise<ajaxPostObject> =>
-    requests.post(` ${import.meta.env.VITE_API_URL}reply/image`, replyMessageBody, accessToken),
+  postMessageToBBS: (messageBody: apiPostRequestObject, accessToken: string): Promise<apiPostResponseObject> => requests.post(`${import.meta.env.VITE_API_URL}bbs/post`, messageBody, accessToken),
+  postImageToBBS: (messageBody: apiPostRequestObject, accessToken: string): Promise<apiPostResponseObject> => requests.post(`${import.meta.env.VITE_API_URL}bbs/post/image`, messageBody, accessToken),
+  replyToBBSMessage: (replyMessageBody: apiReplyRequestObject, accessToken: string): Promise<apiReplyResponseObject> =>
+    requests.post(`${import.meta.env.VITE_API_URL}bbs/reply`, replyMessageBody, accessToken),
+  replyWithImageToBBSMessage: (replyMessageBody: apiReplyRequestObject, accessToken: string): Promise<apiReplyResponseObject> =>
+    requests.post(` ${import.meta.env.VITE_API_URL}bbs/reply/image`, replyMessageBody, accessToken),
 }
 
 export const cloud = {
-  getCloudinaryToken: (accessToken: string): Promise<ajaxSignatureResponseObject> => requests.get(`${import.meta.env.VITE_API_URL}image/upload`, accessToken),
-  uploadImageToCloudinary: (url: string, cloudinaryData: unknown, options: AxiosRequestConfig<any>): Promise<cloudinaryUploadApiResponse> => requests.postCustom(`${url}`, cloudinaryData, options),
+  getCloudinaryToken: (accessToken: string): Promise<apiSignatureResponseObject> => requests.get(`${import.meta.env.VITE_API_URL}bbs/image/upload`, accessToken),
+  uploadImageToCloudinary: (url: string, cloudinaryData: unknown, options: AxiosRequestConfig<any>): Promise<cloudinaryApiUploadResponse> => requests.postCustom(`${url}`, cloudinaryData, options),
 }

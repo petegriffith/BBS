@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "커뮤니티 사용자: {count}",
+  "reply": "회신하다",
+  "untranslatedMsg": "원본 메시지 보기",
+  "languages": "언어",
+  "inputPlaceholder": "여기에 메시지를 입력하세요",
+  "selectNicknameAndCountry": "닉네임과 국가를 입력하세요.",
+  "nickname": "별명",
+  "country": "국가",
+  "cancel": "취소",
+  "uploadPhoto": "이미지 업로드",
+  "photoConstraintsHeader": "지원되는 파일:",
+  "photoSizeConstraints": "최대 10MB",
+  "replyBox": "{nickname}에 답장",
+  "countrySelectPlaceholder": "당신의 나라를 선택하세요",
+  "newMessages": "새 메시지 {count}개 | 새 메시지 {count}개",
+  "inputMessageTooLong": "메시지는 300자를 초과할 수 없습니다.",
+  "nicknameTooLong": "닉네임은 50자 이하여야 합니다."
+}

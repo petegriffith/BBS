@@ -1,0 +1,17 @@
+{
+  "community_users": "Community Users",
+  "reply": "Reply",
+  "untranslated_msg": "See original message",
+  "languages": "Languages",
+  "inputPlaceholder": "Input message here",
+  "selectNicknameAndCountry": "Please select a nickname and enter your country",
+  "nickname": "Nickname",
+  "country": "Country",
+  "cancel": "Cancel",
+  "uploadPhoto": "Please select a photo from your computer to upload",
+  "photoConstraintsHeader": "Supported Files:",
+  "photoSizeConstraints": "10mb max",
+  "photoFileConstraints": ".jpg, .png, .gif"
+}
+
+

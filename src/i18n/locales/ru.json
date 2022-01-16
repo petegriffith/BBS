@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "Пользователи сообщества: {count}",
+  "reply": "Ответить",
+  "untranslatedMsg": "См. оригинальное сообщение",
+  "languages": "Языки",
+  "inputPlaceholder": "Введите сообщение здесь",
+  "selectNicknameAndCountry": "Пожалуйста, введите свой ник и страну",
+  "nickname": "Прозвище",
+  "country": "Страна",
+  "cancel": "Отмена",
+  "uploadPhoto": "Загрузить изображение",
+  "photoConstraintsHeader": "Поддерживаемые файлы:",
+  "photoSizeConstraints": "максимум 10 мб",
+  "replyBox": "Replying to {nickname}",
+  "countrySelectPlaceholder": "Выберите свою страну",
+  "newMessages": "{count} новое сообщение | {count} новых сообщения",
+  "inputMessageTooLong": "Сообщение не может быть длиннее 300 символов",
+  "nicknameTooLong": "Длина псевдонима не может превышать 50 символов"
+}

@@ -1,80 +1,74 @@
 <template>
-  <div class="modal">
-    <div class="overlay"></div>
-    <div class="modal_content">
-      <h2 class="modal_title">{{ $t('uploadPhoto') }}</h2>
-      <p class="modal_notes modal_notes_header">{{ $t('photoConstraintsHeader') }}</p>
-      <p class="modal_notes">{{ $t('photoSizeConstraints') }}</p>
-      <p class="modal_notes">{{ $t('photoFileConstraints') }}</p>
-      <img src="" alt="" />
-      <form class="form-content" role="form">
-        <input type="file" class="file_input" name="photo" accept=".jpg, .jpeg, .gif, .png" @change="file = extractPhotoFile($event)" />
-        <div class="ok-button button" role="button" @click="$emit('uploadPhotoAndCloseModal', file)">OK</div>
-        <div class="cancel-button button" @click="$emit('closeModal')" role="button">{{ $t('cancel') }}</div>
-      </form>
+  <focus-trap>
+    <div class="modal">
+      <div class="modal-overlay" @click="$emit('closeModal')"></div>
+      <div class="modal-content">
+        <header ref="modalElement" class="modal-header">
+          <h2 class="modal-title">{{ t('uploadPhoto') }}</h2>
+          <i
+            title="Close"
+            class="close-modal material-icons"
+            role="button"
+            tabindex="0"
+            aria-label="close"
+            @click="$emit('closeModal')"
+            >close</i
+          >
+        </header>
+        <p class="notes notes_header">{{ t('photoConstraintsHeader') }}</p>
+        <p class="notes">.jpg, .png, .gif</p>
+        <p class="notes">{{ t('photoSizeConstraints') }}</p>
+        <img src="" alt="" />
+        <form class="form-content" role="form">
+          <input
+            ref="fileInput"
+            type="file"
+            class="file_input"
+            name="photo-upload"
+            accept=".jpg, .jpeg, .gif, .png"
+            @change="file = extractPhotoFile($event)"
+          />
+          <div
+            class="ok-button button"
+            role="button"
+            aria-label="upload confirm"
+            tabindex="0"
+            @click="$emit('uploadPhotoAndCloseModal', file)"
+          >
+            OK
+          </div>
+          <div class="cancel-button button" role="button" aria-label="cancel" tabindex="0" @click="$emit('closeModal')">
+            {{ t('cancel') }}
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+  </focus-trap>
 </template>
 
 <script setup lang="ts">
-  import { ref, Ref } from '@vue/reactivity'
+  import { ref, Ref, onMounted } from 'vue'
   import { extractPhotoFile } from '../../global/utility/image'
 
   const file: Ref<File | undefined> = ref(undefined)
+  const modalElement = ref<HTMLDivElement>()
+  import { useI18n } from 'vue-i18n'
+  const { t } = useI18n({ useScope: 'global' })
+
+  onMounted(() => {modalElement.value?.focus()})
 
   defineEmits(['closeModal', 'uploadPhotoAndCloseModal'])
 </script>
 
 <style scoped>
-  .modal {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 990;
-  }
-
-  .modal .overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 995;
-    background: rgba(0, 0, 0, 0.85);
-  }
-
-  .modal .modal_content {
-    z-index: 999;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    padding: 20px;
-    transform: translate(-50%, -50%);
-    max-height: 100vh;
-    background: #fff;
-    box-sizing: border-box;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
-    border-radius: 4px;
-    width: 100%;
-    max-width: 50vw;
-  }
-
-  .modal_title {
-    text-align: left;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-weight: bold;
-  }
-  .modal_notes {
+  .notes {
     color: grey;
     margin: 0;
   }
 
-  .modal_notes_header {
+  .notes_header {
     margin-top: 1em;
-    font-weight: bold
+    font-weight: bold;
   }
   .form-content {
     display: flex;

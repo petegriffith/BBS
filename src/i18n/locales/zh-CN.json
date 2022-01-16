@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "社区用户：{count}",
+  "reply": "回复",
+  "untranslatedMsg": "查看原始消息",
+  "languages": "语言",
+  "inputPlaceholder": "在此输入消息",
+  "selectNicknameAndCountry": "请输入您的昵称和国家",
+  "nickname": "昵称",
+  "country": "国家",
+  "cancel": "取消",
+  "uploadPhoto": "上传图片",
+  "photoConstraintsHeader": "支持的文件：",
+  "photoSizeConstraints": "最大 10 mb",
+  "replyBox": "回复{nickname}",
+  "countrySelectPlaceholder": "选择您的国家",
+  "newMessages": "{count} 条新消息 | {count} 条新消息",
+  "inputMessageTooLong": "消息长度不能超过 300 个字符",
+  "nicknameTooLong": "昵称不能超过 50 个字符"
+}

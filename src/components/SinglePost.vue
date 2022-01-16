@@ -1,48 +1,47 @@
 <template>
   <div class="singlepost-container" :class="{ official: isOfficial }">
     <div class="userdata-container">
+      <i v-if="isOfficial" class="material-icons official-icon">local_police</i>
       <h5 class="username">{{ username }}</h5>
-      <!-- <img v-if="countryObj" :src="countryObj.flag_url" class="flag-icon" :alt="`Flag of ${countryObj.country_name}`" /> -->
       <country-flag v-if="countryObj" :country="countryObj.alpha_2" class="flag-icon" :shadow="true" />
       <p class="post-time">{{ postTime }}</p>
       <p class="translation-direction">{{ lang1 }}->{{ lang2 }}</p>
     </div>
     <div v-if="isReply" class="replyee-info-container">
       <span class="replyee-info">
-        <i class="material-icons reply-icon">reply</i> <span>Replying to {{ replyObj?.name }}: {{ replyObj?.contents }}</span>
+        <i class="material-icons reply-icon">reply</i>
+        <span> {{ t('replyBox', { nickname: `${replyObj?.name}` }) }} : {{ replyObj?.contents }} </span>
       </span>
     </div>
     <div class="message-container">
-      <img v-if="isImage" :src="imgUrl" class="posted_image" @click="showEnlargedImage = true" />
+      <img v-if="isImage" :src="imgUrl" class="posted_image" @click="emit('showEnlargedImage', imgUrl)" />
       <i v-if="isImage" @click="handleImageDownload" class="material-icons download-icon">download</i>
       <p v-else>{{ messageText }}</p>
     </div>
     <div class="button-container" v-if="!isImage">
-      <span class="post-button" @click="handleReplyClick"><i class="material-icons button">reply</i></span>
-      <span class="post-button" @click="handleOriginalLanguageClick"><i class="material-icons button">language</i></span>
+      <span class="post-button" role="button" aria-label="reply" tabindex="0" @click="handleReplyClick"><i class="material-icons button">reply</i></span>
+      <span class="post-button" role="button" aria-label="see original language" tabindex="0" @click="handleOriginalLanguageClick"><i class="material-icons button">language</i></span>
     </div>
   </div>
-   <EnlargedImage :imgUrl="imgUrl" v-if="showEnlargedImage === true" @closeModal="showEnlargedImage = false"/>
 </template>
 
 <script setup lang="ts">
-  import { ref, Ref, defineEmits } from 'vue'
-  import SupportedCountries from '../global/supportedCountries.json'
+  import { ref, Ref } from 'vue'
+  import SupportedCountries from '../assets/supportedCountries.json'
   import { useI18n } from 'vue-i18n'
   import { setReplyInfo, toggleIsReply } from '../global/store/setters'
   import { getIsReplyBool } from '../global/store/getters'
   import { checkIfUser } from '../global/utility/user'
-  import { formatDateTime } from '../global/utility/messages'
+  import { formatDateTime, unescapeHtml } from '../global/utility/messages'
   import { downloadImage } from '../global/utility/image'
   import CountryFlag from 'vue-country-flag-next'
-  import EnlargedImage from './modals/EnlargedImage.vue'
 
   const props = defineProps<{
     message: communityMessage
   }>()
-  
-  const emit = defineEmits(['showSetUserModal'])
-  const { locale } = useI18n({ useScope: 'global' })
+
+  const emit = defineEmits(['showSetUserModal', 'showEnlargedImage'])
+  const { t, locale } = useI18n({ useScope: 'global' })
 
   const username = props.message.name
   const postTime = formatDateTime(props.message.created_at)
@@ -53,8 +52,6 @@
   const isOfficial = props.message.is_official
   const messageText = ref('')
   const countryObj = SupportedCountries.filter((country) => country.alpha_2 === flagCode)[0]
-
-  const showEnlargedImage = ref(false)
 
   // HANDLES IF THE POST IS AN IMAGE
   const imageObj = props.message.content
@@ -84,8 +81,8 @@
   const changeLangMessage: Ref<string | undefined> = ref(undefined)
 
   if (props.message.original_contents) {
-    origLangMessage.value = props.message.original_contents
-    changeLangMessage.value = props.message.change_contents
+    origLangMessage.value = unescapeHtml(props.message.original_contents)
+    changeLangMessage.value = unescapeHtml(props.message.change_contents)
     if (locale.value === lang1) {
       messageText.value = origLangMessage.value
     } else if (locale.value === lang2) {
@@ -194,7 +191,17 @@
     font-size: 1em;
   }
 
+  .download-icon {
+    cursor: pointer
+  }
+
+  .official-icon {
+    color: red;
+    font-size: 1em;
+  }
+
   .posted_image {
     max-width: 80vw;
+    cursor: pointer;
   }
 </style>

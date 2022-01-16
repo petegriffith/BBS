@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "ผู้ใช้ชุมชน: {count}",
+  "reply": "ตอบกลับ",
+  "untranslatedMsg": "ดูข้อความต้นฉบับ",
+  "languages": "ภาษา",
+  "inputPlaceholder": "ใส่ข้อความที่นี่",
+  "selectNicknameAndCountry": "กรุณากรอกชื่อเล่นและประเทศของคุณ",
+  "nickname": "ชื่อเล่น",
+  "country": "ประเทศ",
+  "cancel": "ยกเลิก",
+  "uploadPhoto": "อัพโหลดภาพ",
+  "photoConstraintsHeader": "ไฟล์ที่รองรับ:",
+  "photoSizeConstraints": "สูงสุด 10mb",
+  "replyBox": "กำลังตอบกลับไปยัง {nickname}",
+  "countrySelectPlaceholder": "เลือกประเทศของคุณ",
+  "newMessages": "{count} ข้อความใหม่ | {count} ข้อความใหม่",
+  "inputMessageTooLong": "ข้อความต้องมีความยาวไม่เกิน 300 ตัวอักษร",
+  "nicknameTooLong": "ชื่อเล่นต้องมีความยาวไม่เกิน 50 ตัวอักษร"
+}

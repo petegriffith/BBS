@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "Олон нийтийн хэрэглэгчид: {count}",
+  "reply": "Хариулах",
+  "untranslatedMsg": "Эх мессежийг үзнэ үү",
+  "languages": "Хэлнүүд",
+  "inputPlaceholder": "Энд мессеж оруулна уу",
+  "selectNicknameAndCountry": "Өөрийн хоч, улс орноо оруулна уу",
+  "nickname": "Хоч",
+  "country": "Улс",
+  "cancel": "Цуцлах",
+  "uploadPhoto": "Зураг байршуулах",
+  "photoConstraintsHeader": "Дэмжигдсэн файлууд:",
+  "photoSizeConstraints": "Хамгийн ихдээ 10mb",
+  "replyBox": "{nickname}-д хариулж байна",
+  "countrySelectPlaceholder": "Улсаа сонгоно уу",
+  "newMessages": "{count} шинэ зурвас | {count} шинэ мессеж",
+  "inputMessageTooLong": "Зурвас 300 тэмдэгтээс урт байж болохгүй",
+  "nicknameTooLong": "Хоч 50 тэмдэгтээс урт байж болохгүй"
+}

@@ -1,0 +1,87 @@
+[
+  {
+    "lang": "en",
+    "label": "English",
+    "note": "English/英語"
+  },
+  {
+    "lang": "ja",
+    "label": "日本語",
+    "note": "Japanese/日本語"
+  },
+  {
+    "lang": "zh-CN",
+    "label": "中文",
+    "note": "Chinese (Simplified)/中国語"
+  },
+  {
+    "lang": "zh-TW",
+    "label": "中文繁体",
+    "note": "Chinese (Traditional)/中国語"
+  },
+  {
+    "lang": "ko",
+    "label": "한국어",
+    "note": "Korean/韓国語"
+  },
+  {
+    "lang": "th",
+    "label": "ไทย",
+    "note": "Thai/タイ語"
+  },
+  {
+    "lang": "ms",
+    "label": "Melayu",
+    "note": "Malay/マレー語"
+  },
+  {
+    "lang": "id",
+    "label": "bahasa Indonesia",
+    "note": "Indonesian/インドネシア語"
+  },
+  {
+    "lang": "tl",
+    "label": "Tagalog",
+    "note": "Tagalog/タガログ語"
+  },
+  {
+    "lang": "vi",
+    "label": "Tiếng Việt",
+    "note": "Vietnamese/ベトナム語"
+  },
+  {
+    "lang": "hi",
+    "label": "हिंदी",
+    "note": "Hindi/ヒンディー語"
+  },
+  {
+    "lang": "fr",
+    "label": "français",
+    "note": "French/フランス語"
+  },
+  {
+    "lang": "de",
+    "label": "Deutsch",
+    "note": "German/ドイツ語"
+  },
+  {
+    "lang": "it",
+    "label": "italiano",
+    "note": "Italian/イタリア語"
+  },
+  {
+    "lang": "ru",
+    "label": "русский",
+    "note": "Russian/ロシア語"
+  },
+  {
+    "lang": "es",
+    "label": "castellano",
+    "note": "Spanish/スペイン語"
+  },
+  {
+    "lang": "mn",
+    "label": "Монгол",
+    "note": "Mongolian/モンゴル語"
+  }
+]

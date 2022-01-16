@@ -1,0 +1,19 @@
+{
+  "communityUserCount": "Người dùng cộng đồng: {count}",
+  "reply": "Hồi đáp",
+  "untranslatedMsg": "Xem tin nhắn gốc",
+  "languages": "Ngôn ngữ",
+  "inputPlaceholder": "Nhập tin nhắn tại đây",
+  "selectNicknameAndCountry": "Vui lòng nhập biệt hiệu và quốc gia của bạn",
+  "nickname": "Tên nick",
+  "country": "Quốc gia",
+  "cancel": "Hủy bỏ",
+  "uploadPhoto": "Tải lên một hình ảnh",
+  "photoConstraintsHeader": "Tệp được hỗ trợ:",
+  "photoSizeConstraints": "Tối đa 10mb",
+  "replyBox": "Đang trả lời {nickname}",
+  "countrySelectPlaceholder": "Chọn đất nước của bạn",
+  "newMessages": "{count} tin nhắn mới | {count} tin nhắn mới",
+  "inputMessageTooLong": "Tin nhắn không được dài hơn 300 ký tự",
+  "nicknameTooLong": "Biệt hiệu không được dài hơn 50 ký tự"
+}

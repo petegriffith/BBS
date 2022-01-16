@@ -3,22 +3,27 @@
     <div class="main-container">
       <loading v-model:active="isLoading" :can-cancel="true" :is-full-page="false"> </loading>
       <div class="header">
-        <div class="community-user-info">{{ $t('community_users') }}: {{ communityUsersNumber }}</div>
+        <div class="community-user-info">{{ t('communityUserCount', communityUsersNumber) }}</div>
         <div v-if="userNickname" class="user-container">
           <p class="username">{{ userNickname }}</p>
           <country-flag class="flag" :country="userCountry" :shadow="true" />
         </div>
         <div class="button-container">
-          <div v-if="userNickname" class="logout button" role="button" @click="handleLogoutUser"><i class="material-icons md-18 icon-align">logout</i></div>
-          <div class="refresh button" role="button" @click="handleRefreshBBS"><i class="material-icons md-18 icon-align">refresh</i></div>
-          <div v-if="!languageSelectIsDisabled" class="language button" role="button" @click="showLangSelect = true"><i class="material-icons icon-align">language</i>{{ localeLabel }}</div>
+          <div v-if="userNickname" class="logout button" role="button" aria-label="logout user" tabindex="0" @click="handleLogoutUser"><i class="material-icons md-18 icon-align">logout</i></div>
+          <div class="refresh button" role="button" aria-label="refresh BBS" tabindex="0" @click="handleRefreshBBS"><i class="material-icons md-18 icon-align">refresh</i></div>
+          <div v-if="!languageSelectIsDisabled" class="language button" role="button" aria-label="select language" tabindex="0" @click="showLangSelect = true">
+            <i class="material-icons icon-align">language</i>{{ localeLabel }}
+          </div>
         </div>
       </div>
-      <div class="post-container" :key="containerKey">
+      <div class="post-container" :key="containerKey" ref="scrollDiv">
         <!-- These interior divs are for the sole purpose of attaching a class and id to each SinglePost (for scrollToBottom) without making Vue mad -->
         <div v-for="(message, index) in messages" class="single_post" :id="`id ${index}`">
-          <SinglePost :key="index" :message="message" @showSetUserModal="showSetUserModal = true" />
+          <SinglePost :key="message.order" :message="message" @showSetUserModal="showSetUserModal = true" @showEnlargedImage="handleShowEnlargedImage" />
         </div>
+      </div>
+      <div v-if="newMessageCount > 0" class="flex-container-row new_message_container">
+        <div class="new_message_indicator" role="button" aria-label="see new messages" tabindex="0" @click="handleNewMessagesClick">{{ t('newMessages', newMessageCount) }}</div>
       </div>
       <PostInput
         v-if="!postsDisabled"
@@ -27,11 +32,12 @@
         @openImageModal="showImageModal = true"
         @showSetUserModal="showSetUserModal = true"
       />
-      <SetUserProfileModal v-if="showSetUserModal" @closeModal="showSetUserModal = false" @setProfile="handleSetProfile($event)" />
-      <LangSelectModal v-if="showLangSelect" @closeModal="showLangSelect = false" @closeModalAndResetLocale="handleResetLanguage($event)" />
-      <ImagePostModal v-if="showImageModal" @closeModal="showImageModal = false" @uploadPhotoAndCloseModal="handlePostImage($event)" />
     </div>
   </div>
+  <SetUserProfileModal v-if="showSetUserModal" @closeModal="showSetUserModal = false" @setProfile="handleSetProfile($event)" />
+  <LangSelectModal v-if="showLangSelect" @closeModal="showLangSelect = false" @closeModalAndResetLocale="handleResetLanguage($event)" />
+  <ImagePostModal v-if="showImageModal" @closeModal="showImageModal = false" @uploadPhotoAndCloseModal="handlePostImage($event)" />
+  <EnlargedImage v-if="showEnlargedImage === true" :imgUrl="imgUrl" @closeModal="showEnlargedImage = false" />
 </template>
 
 <script setup lang="ts">
@@ -40,28 +46,31 @@
   import LangSelectModal from '../components/modals/LangSelectModal.vue'
   import ImagePostModal from '../components/modals/ImagePostModal.vue'
   import SetUserProfileModal from '../components/modals/SetUserProfileModal.vue'
+  import EnlargedImage from '../components/modals/EnlargedImage.vue'
 
   import { setMessages, resetMessageLanguage, scrollToBottom } from '../global/utility/messages'
   import { postMessageAndResetMessages, postReplyAndResetMessages, postImageandResetMessages } from '../global/utility/post'
-  import { getContainerKey, getCurrentCommunityProfile, getCurrentCommunityMessages, getCurrentAnonymousUser } from '../global/store/getters'
-  import { fetchAndSetCommunityProfile, setCurrentAnonymousUser } from '../global/store/setters'
+  import { getContainerKey, getCurrentCommunityProfile, getCurrentCommunityMessages, getCurrentAnonymousUser, getNewMessageCount } from '../global/store/getters'
+  import { setCommunityProfile, incrementContainerKey, resetNewMessages, setCurrentLocale } from '../global/store/setters'
 
-  import supportedLanguages from '../global/supported_languages.json'
+  import supportedLanguages from '../assets/supported_languages.json'
 
-  import { ref, onBeforeMount, onUpdated } from 'vue'
+  import { ref, onBeforeMount, onUpdated, reactive, watchEffect } from 'vue'
   import { useI18n } from 'vue-i18n'
+  import { useScroll } from '@vueuse/core'
   import Loading from 'vue-loading-overlay'
   import CountryFlag from 'vue-country-flag-next'
   import 'vue-loading-overlay/dist/vue-loading.css'
-  import { addNewUserToCommunity, checkForLocalUser } from '../global/utility/user'
-  import { checkURL } from '../global/utility/page'
+  import { addNewUserToCommunity, checkForLocalUser, logoutUserFromApp } from '../global/utility/user'
+  import { addGtagScript, checkURL, setPageTitle } from '../global/utility/page'
 
-  const { locale } = useI18n({ useScope: 'global' })
+  const { locale, t } = useI18n({ useScope: 'global' })
 
   const isLoading = ref(true)
   const showLangSelect = ref(false)
   const showImageModal = ref(false)
   const showSetUserModal = ref(false)
+  const showEnlargedImage = ref(false)
 
   const localeLabel = ref('English')
 
@@ -69,6 +78,7 @@
   const communityIdNumber = ref(0)
   const messages = getCurrentCommunityMessages()
   const { communityId, langFromURL } = checkURL()
+  const newMessageCount = getNewMessageCount()
 
   const containerKey = getContainerKey()
 
@@ -79,36 +89,107 @@
 
   const languageSelectIsDisabled = true
 
+  const imgUrl = ref('')
+
+  const scrollDiv = ref<HTMLElement | null>(null)
+  const scroll = reactive(useScroll(scrollDiv, { offset: { bottom: 100 } }))
+
   onBeforeMount(async () => {
-    // this function is a huge mess. I'll clean it up.
-    console.log('setting stores...')
+    addGtagScript()
+    await setCommunityProfile(communityId, locale.value as string)
+    setLanguage(langFromURL)
+    setPageTitle(locale.value as string)
+    const { total_count, community_id, post_disabled_flg, bbs_type } = getCurrentCommunityProfile()
+    communityUsersNumber.value = total_count
+    communityIdNumber.value = community_id
+    if (post_disabled_flg) postsDisabled.value = true
+    if (bbs_type === 'bbs_one_way') postsDisabled.value = true
+    await setMessages(communityIdNumber.value, locale.value as string)
     if (checkForLocalUser()) {
       userNickname.value = getCurrentAnonymousUser().nickname
       userCountry.value = getCurrentAnonymousUser().country_cd
+      scrollToBottom()
     }
-    setLanguage(langFromURL)
-    await fetchAndSetCommunityProfile(communityId, locale.value as string)
-    const communityProfile = getCurrentCommunityProfile()
-    communityUsersNumber.value = communityProfile.total_count
-    communityIdNumber.value = communityProfile.community_id
-    if (communityProfile.post_disabled_flg) postsDisabled.value = true
-    if (communityProfile.bbs_type === 'bbs_one_way') postsDisabled.value = true
-    await setMessages(communityIdNumber.value, locale.value as string)
     isLoading.value = false
   })
 
   onUpdated(() => {
-    if (checkForLocalUser()) {
-      userNickname.value = getCurrentAnonymousUser().nickname
-      userCountry.value = getCurrentAnonymousUser().country_cd
-    }
-    scrollToBottom()
+    userNickname.value = getCurrentAnonymousUser().nickname
+    userCountry.value = getCurrentAnonymousUser().country_cd
+  })
+
+  watchEffect(() => {
+    scroll.arrivedState.bottom === true && resetNewMessages()
   })
 
   const handleRefreshBBS = async () => {
-    await fetchAndSetCommunityProfile(communityIdNumber.value, locale.value as supportedLanguage)
+    isLoading.value = true
+    await setCommunityProfile(communityIdNumber.value, locale.value as supportedLanguage)
     communityUsersNumber.value = getCurrentCommunityProfile().total_count
     await setMessages(communityIdNumber.value, locale.value as string)
+    scrollToBottom()
+    isLoading.value = false
+  }
+
+  const handleLogoutUser = () => {
+    isLoading.value = true
+    logoutUserFromApp()
+    scrollToBottom()
+    isLoading.value = false
+  }
+
+  const handleResetLanguage = async (lang: string) => {
+    isLoading.value = true
+    locale.value = lang
+    const label = await resetMessageLanguage(lang as supportedLanguage)
+    localeLabel.value = label
+    incrementContainerKey()
+    isLoading.value = false
+    showLangSelect.value = false
+  }
+
+  const handleSetProfile = async (data: emmited_profile_data) => {
+    isLoading.value = true
+    await addNewUserToCommunity(data, locale.value as string)
+    scrollToBottom()
+    showSetUserModal.value = false
+    isLoading.value = false
+  }
+
+  const handlePostMessage = async (message: string) => {
+    isLoading.value = true
+    await postMessageAndResetMessages(message, locale.value as string)
+    scrollToBottom()
+    isLoading.value = false
+  }
+
+  const handlePostReply = async (message: string) => {
+    isLoading.value = true
+    await postReplyAndResetMessages(message, locale.value as string)
+    scrollToBottom()
+    isLoading.value = false
+  }
+
+  const handlePostImage = async (imageFile: File) => {
+    if (imageFile.size < 5000000) {
+      isLoading.value = true
+      await postImageandResetMessages(imageFile, locale.value as string)
+      showImageModal.value = false
+      scrollToBottom()
+      isLoading.value = false
+    } else {
+      // Need better error handling
+      alert('Please select a valid file')
+    }
+  }
+
+  const handleShowEnlargedImage = (url: string) => {
+    imgUrl.value = ''
+    imgUrl.value = url
+    showEnlargedImage.value = true
+  }
+
+  const handleNewMessagesClick = () => {
     scrollToBottom()
   }
 
@@ -127,68 +208,29 @@
     // setting label for widget
     const label = supportedLanguages.filter((lang) => lang.lang === locale.value)[0].label
     localeLabel.value = label
-  }
-
-  const handleLogoutUser = () => {
-    isLoading.value = true
-    localStorage.removeItem('user')
-    setCurrentAnonymousUser({ nickname: '', country_cd: '', lang_cd: '', access_token: '' })
-    userNickname.value = ''
-    userCountry.value = ''
-    isLoading.value = false
-  }
-
-  const handleResetLanguage = async (lang: string) => {
-    isLoading.value = true
-    locale.value = lang
-    const label = await resetMessageLanguage(lang as supportedLanguage)
-    localeLabel.value = label
-    isLoading.value = false
-    showLangSelect.value = false
-  }
-
-  const handleSetProfile = async (data: emmited_profile_data) => {
-    isLoading.value = true
-    addNewUserToCommunity(data, locale.value as string)
-    showSetUserModal.value = false
-    isLoading.value = false
-  }
-
-  const handlePostMessage = async (message: string) => {
-    isLoading.value = true
-    await postMessageAndResetMessages(message, locale.value as string)
-    isLoading.value = false
-  }
-
-  const handlePostReply = async (message: string) => {
-    isLoading.value = true
-    await postReplyAndResetMessages(message, locale.value as string)
-    isLoading.value = false
-  }
-
-  const handlePostImage = async (imageFile: File) => {
-    // Image Size limiter
-    if (imageFile.size < 5000000) {
-      isLoading.value = true
-      await postImageandResetMessages(imageFile, locale.value as string)
-      showImageModal.value = false
-      isLoading.value = false
-    } else {
-      // Need better error handling
-      alert('Please select a valid file')
-    }
+    setCurrentLocale(locale.value as string)
   }
 
   if (import.meta.env.PROD) {
-    setInterval(handleRefreshBBS, 10000)
+    setInterval(() => {
+      setMessages(communityIdNumber.value, locale.value as string)
+      communityUsersNumber.value = getCurrentCommunityProfile().total_count
+    }, 10000)
   }
 </script>
 
 <style scoped>
   .main-container {
-    max-height: 100vh;
+    max-height: calc(100vh - 2px);
     display: flex;
     flex-direction: column;
+  }
+
+  .flex-container-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
   .header {
     display: flex;
@@ -196,6 +238,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5em;
+    min-height: 5vh;
     border-bottom: 1px solid lightgrey;
   }
   .community-user-info,
@@ -251,6 +294,16 @@
   }
 
   .flag {
-    margin-bottom: .2em;
+    margin-bottom: 0.2em;
+  }
+
+  .new_message_indicator {
+    background-color: lightgrey;
+    border-radius: 20px;
+    padding: 0.4em;
+    margin: 2px;
+    cursor: pointer;
+    position: absolute;
+    margin-bottom: calc(2em + 5px);
   }
 </style>

@@ -1,11 +1,81 @@
-# Vue 3 + Typescript + Vite
+# Kotozna BBS
+> A pooled BBS-style comment board built for mounting in iFrames
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-## Recommended IDE Setup
+## Contents
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+------
+- [Built With](#Built-With)
+- [Getting Started](#Getting-Started)
+    - [Installation](#installation)
+    - [Dev](#development)
+    - [Build](#build)
+- [Notes](#Notes)
+	- [Language selector](#Language-Selector)
+	- [App sizing](#App-Sizing)
+	- [Vite and .env variables](#Vite)
+	- [Google Analytics](#Google-Analytics)
+------
 
-## Type Support For `.vue` Imports in TS
+## Built With
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+BBS was written in [TypeScript](https://www.typescriptlang.org/) using [Vue 3](https://v3.vuejs.org/) on top of [Vite](https://vitejs.dev/).
+
+BBS uses: 
+- [Axios](https://axios-http.com/) for data fetching
+- [Vue-i18n](https://vue-i18n.intlify.dev/) for internationalization
+- [Vue-Select](https://vue-select.org/) to help with a customized country select menu
+- [Vue-Country-Flag](https://github.com/P3trur0/vue-country-flag/blob/master/packages/vue-country-flag-next/README.md) for responsive country flag icons
+- [Vue-Loading-Overlay](https://github.com/ankurk91/vue-loading-overlay) for the loading spinner 
+
+NOTE: While Vite makes development lightning-fast, it does introduce the following [complication](#Vite) 
+  
+## Getting Started
+
+### Installation
+Install the required depenencies via
+```
+npm install
+```
+
+Create a .env file with the following values
+```
+VITE_API_URL=<KTZN API domain>
+
+VITE_GA_MEASUREMENT_ID=<Google analytics measurement ID>
+```
+
+### Development
+Start the development server (`http://localhost:3000/`) with
+```
+npm run dev
+```
+
+## Build
+Build this project for staging and production with
+```
+npm run build
+```
+
+## Notes
+
+### Language Selector
+BBS comes with a language selector that is by default turned *off*.
+To use the language selector, simply set
+
+const languageSelectIsDisabled = false
+
+in MainView.vue
+  
+
+### iFrame specific notes:
+
+BBS should be mobile responsive, but it is not built for desktop mounting in small iFrames. For mounting on desktop, it is recommended that the app be sized no smaller than 400 x 400px
+
+### About Vite and env variables:
+
+- Vite has replaced `process.env` with `import.meta.env` and env variables must start with `VITE_`, so `API_URL` becomes `VITE_API_URL`. Env vars that don't begin with `VITE_` will always return undefined!
+
+### Google Analytics
+
+- GA measurement Id is read in env as `VITE_GA_MEASUREMENT_ID`
