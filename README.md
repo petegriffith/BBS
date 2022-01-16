@@ -28,7 +28,7 @@ BBS uses:
 - [Vue-Country-Flag](https://github.com/P3trur0/vue-country-flag/blob/master/packages/vue-country-flag-next/README.md) for responsive country flag icons
 - [Vue-Loading-Overlay](https://github.com/ankurk91/vue-loading-overlay) for the loading spinner 
 
-NOTE: While Vite makes development lightning-fast, it does introduce the following [complication](#About) 
+NOTE: While Vite makes development lightning-fast, it does introduce the following [complication](#About-Vite-and-env-variables) 
   
 ## Getting Started
 
